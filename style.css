@@ -1,0 +1,149 @@
+/* ---------- Colors and base ---------- */
+:root{
+  color-scheme:light;
+  --green:#24402b; --yolk:#f4b41a; --shell:#f7efe2; --ink:#2b2118; --comb:#d6402c;
+  --bg:#fbf7ef; --card:#ffffff; --muted:#6b5d4f; --line:#e6dccb;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root{color-scheme:dark;--bg:#16201a;--card:#1f2c23;--ink:#f3eadb;--muted:#b9ad9b;--line:#33443a;--shell:#26362b}
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 Figtree,system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Georgia,sans-serif;line-height:1.05;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--comb);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+
+/* ---------- Animations ---------- */
+/* 1. Zoom in on page load (hero text) */
+@keyframes zoomIn{
+  from{opacity:0;transform:scale(.7)}
+  to{opacity:1;transform:scale(1)}
+}
+.zoom-in{animation:zoomIn .9s cubic-bezier(.2,.8,.2,1) both}
+.zoom-in.d1{animation-delay:.2s}
+.zoom-in.d2{animation-delay:.4s}
+
+/* 2. Smooth zoom in and zoom out, looping (hero photo) */
+@keyframes breathe{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.12)}
+}
+.photo{overflow:hidden;border-radius:28px 28px 0 0;align-self:end}
+.photo img{animation:breathe 9s ease-in-out infinite}
+
+/* 3. Pulse (zoom in and out) for the phone number and call button */
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.07)}
+}
+.call{animation:pulse 2.4s ease-in-out infinite}
+.phone{animation:pulse 2.8s ease-in-out infinite}
+
+/* 4. Zoom in when scrolling into view (JS adds .show) */
+.js .reveal{opacity:0;transform:scale(.85);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.js .reveal.d1{transition-delay:.15s}
+.js .reveal.show{opacity:1;transform:scale(1)}
+
+/* 5. Eggs drop onto the shelf, wobble on hover */
+@keyframes drop{
+  0%{transform:translateY(-420px);opacity:0}
+  15%{opacity:1}
+  70%{transform:translateY(0)}
+  85%{transform:translateY(-14px) rotate(-3deg)}
+  100%{transform:translateY(0);opacity:1}
+}
+@keyframes wob{25%{transform:rotate(-12deg)}75%{transform:rotate(12deg)}}
+
+/* 6. Smooth zoom on hover (photo, cards, icons) */
+.zoomframe{overflow:hidden;border-radius:26px}
+.zoomframe img{transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.zoomframe:hover img{transform:scale(1.12)}
+.item{transition:transform .35s ease,box-shadow .35s ease}
+.item:hover{transform:scale(1.04);box-shadow:0 14px 30px rgba(36,64,43,.18)}
+.item .ico{transition:transform .35s ease}
+.item:hover .ico{transform:scale(1.2) rotate(-6deg)}
+
+/* ---------- Hero ---------- */
+.hero{background:var(--green);color:#fff6e3;position:relative;overflow:hidden;padding:28px 0 0}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.logo{font:800 22px "Bricolage Grotesque",sans-serif;display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo i{width:20px;height:26px;background:var(--shell);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;display:inline-block}
+.call{background:var(--yolk);color:#2b2118;text-decoration:none;font-weight:600;padding:10px 18px;border-radius:99px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;padding:56px 0 0}
+.hero h1{font-size:clamp(42px,7vw,86px);font-weight:800;letter-spacing:-.02em;color:var(--yolk)}
+.hero p{max-width:34ch;font-size:19px;margin:20px 0 28px;color:#efe3cb}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:14px 24px;border-radius:99px;font-weight:600;text-decoration:none;border:2px solid var(--yolk);transition:transform .25s}
+.btn.main{background:var(--yolk);color:#2b2118}
+.btn.ghost{color:var(--yolk)}
+.btn.tg{background:#229ed9;border-color:#229ed9;color:#fff}
+.btn:hover{transform:scale(1.08)}
+.photo img{width:100%;display:block;aspect-ratio:4/3.4;object-fit:cover}
+
+/* shelf with falling eggs */
+.shelf{position:relative;height:130px;background:var(--yolk)}
+.shelf .row{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-around;padding:0 10px}
+.egg{width:clamp(34px,6vw,58px);aspect-ratio:3/4;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;background:var(--shell);box-shadow:inset -6px -8px 0 rgba(120,80,30,.18);transform:translateY(-420px);opacity:0;animation:drop .9s cubic-bezier(.3,1.3,.5,1) forwards;margin-bottom:-6px}
+.egg.b{background:#d9a574;box-shadow:inset -6px -8px 0 rgba(90,50,20,.25)}
+.egg:hover{animation:wob .5s}
+
+/* ---------- Sections ---------- */
+section{padding:76px 0}
+h2{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.01em;margin-bottom:12px}
+.lead{color:var(--muted);max-width:52ch;margin:0 0 36px}
+
+/* prices */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:6px}
+.item .ico{width:46px;height:60px;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;background:var(--shell);box-shadow:inset -5px -6px 0 rgba(120,80,30,.18);margin-bottom:10px}
+.item .ico.b{background:#d9a574}
+.item .ico.q{width:34px;height:44px;background:repeating-radial-gradient(circle at 30% 30%,#e9dcc4 0 5px,#8a6a4a 5px 7px)}
+.item h3{font-size:22px}
+.item small{color:var(--muted)}
+.price{font:800 28px "Bricolage Grotesque",sans-serif;margin-top:8px}
+.price span{font:500 15px Figtree,sans-serif;color:var(--muted)}
+.qty{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:14px}
+.qty button{width:40px;height:40px;border-radius:50%;border:2px solid var(--green);background:transparent;color:var(--ink);font-size:22px;cursor:pointer;line-height:1;transition:transform .2s,background .2s}
+.qty button:hover{background:var(--yolk);border-color:var(--yolk);color:#2b2118;transform:scale(1.15)}
+.qty output{min-width:28px;text-align:center;font-weight:600;font-size:19px}
+.total{margin-top:26px;background:var(--green);color:#fff6e3;border-radius:22px;padding:22px 26px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.total b{font:800 32px "Bricolage Grotesque",sans-serif;color:var(--yolk);display:inline-block}
+.total b.bump{animation:pulse .35s ease}
+.note{font-size:14px;color:var(--muted);margin-top:14px}
+
+
+.about{background:var(--shell)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.two img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover}
+.facts{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:14px}
+.facts li{padding-left:18px;border-left:4px solid var(--yolk)}
+.facts b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:19px}
+
+
+.contact{background:var(--yolk);color:#2b2118;text-align:center}
+.contact h2{margin-bottom:8px}
+.phone{display:inline-block;font:800 clamp(30px,7vw,64px) "Bricolage Grotesque",sans-serif;text-decoration:none;margin:14px 0 8px}
+.contact .btns{justify-content:center;margin:6px 0 14px}
+.contact .btn.call2{border-color:#2b2118;color:#2b2118}
+.contact p{margin:0 auto 10px;max-width:46ch}
+footer{background:var(--green);color:#cdbf9f;text-align:center;padding:22px;font-size:14px}
+
+
+@media (max-width:760px){
+  .hero-grid,.two{grid-template-columns:1fr}
+  .hero-grid{padding-top:36px}
+  section{padding:56px 0}
+  .shelf{height:100px}
+}
+
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .egg{transform:none;opacity:1}
+  .js .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
